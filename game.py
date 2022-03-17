@@ -1,4 +1,5 @@
 from __future__ import annotations
+import json
 from typing import Dict, List, Union
 from dataclasses import dataclass
 
@@ -52,6 +53,23 @@ class GameOptions:
 	minSizeToWin: int
 	boardSize: int
 	EMPTY: str
+
+	def from_json(options: str) -> GameOptions:
+		gameOptions = json.loads(options)
+
+		return GameOptions(
+			players= gameOptions['players'],
+			numberOfPlayers= gameOptions['numberOfPlayers'],
+			boardSize= gameOptions['boardSize'],
+			EMPTY= gameOptions['EMPTY'],
+			minSizeToWin= gameOptions['minSizeToWin'],
+		)
+
+	def to_json(options: GameOptions) -> str:
+		options_in_json = f'{{"players": {options.players}, "numberOfPlayers": {options.numberOfPlayers}, "boardSize": {options.boardSize}, "EMPTY": "{options.EMPTY}", "minSizeToWin": {options.minSizeToWin}}}'
+
+		return options_in_json
+
 
 @dataclass
 class Point:
